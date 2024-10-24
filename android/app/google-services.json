@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "377604490786",
+    "project_id": "calmode",
+    "storage_bucket": "calmode.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:377604490786:android:003d03cc80dd9cd89bec7b",
+        "android_client_info": {
+          "package_name": "com.example.calmode"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBJrvgNEc6XaX63fe79qm6yCemdI2kVvGk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
