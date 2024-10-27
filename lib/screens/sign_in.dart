@@ -1,4 +1,5 @@
-import 'package:calmode/homepage.dart';
+import 'package:calmode/other/homepage.dart';
+import 'package:calmode/other/link.dart';
 import 'package:calmode/services/auth_services.dart';
 import 'package:calmode/screens/sign_up.dart';
 import 'package:flutter/gestures.dart';
@@ -19,6 +20,8 @@ class _SignInState extends State<SignIn> {
   final _formKey = GlobalKey<FormState>();
   bool _isLoading = false;
   String? _errorMessage; // To hold error messages
+
+  final String imageUrl = other.logo;
 
   Future<void> _login() async {
     if (_formKey.currentState!.validate()) {
@@ -106,8 +109,8 @@ class _SignInState extends State<SignIn> {
                 /*const SizedBox(
                   height: 0, // logo above space
                 ),*/
-                Image.asset(
-                  'assets/logo.png',
+                Image.network(
+                  imageUrl,
                   height: 80,
                   width: 54,
                 ),

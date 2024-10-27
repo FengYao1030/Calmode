@@ -1,5 +1,6 @@
+import 'package:calmode/other/homepage.dart';
+import 'package:calmode/other/profile.dart';
 import 'package:calmode/services/firebase_options.dart';
-import 'package:calmode/screens/sign_in.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const SignIn(),
+      home: const HomePage(),
     );
   }
 }

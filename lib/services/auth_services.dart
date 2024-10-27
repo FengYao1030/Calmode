@@ -1,4 +1,4 @@
-import 'package:calmode/homepage.dart';
+import 'package:calmode/other/homepage.dart';
 import 'package:calmode/screens/sign_in.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
