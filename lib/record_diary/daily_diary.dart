@@ -1,4 +1,3 @@
-import 'package:calmode/other/homepage.dart';
 import 'package:calmode/record_diary/mood_selection.dart';
 import 'package:flutter/material.dart';
 
@@ -50,7 +49,7 @@ class _DailyDiaryState extends State<DailyDiary> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: const Color.fromRGBO(247, 244, 242, 1),
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_new_outlined,
@@ -72,7 +71,7 @@ class _DailyDiaryState extends State<DailyDiary> {
         ),
         centerTitle: false,
       ),
-      backgroundColor: Colors.white,
+      backgroundColor: const Color.fromRGBO(247, 244, 242, 1),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
         child: Center(

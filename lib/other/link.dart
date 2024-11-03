@@ -23,3 +23,18 @@ class mood {
   static const String overjoyed =
       'https://firebasestorage.googleapis.com/v0/b/calmode.appspot.com/o/Daily%20Diary%2Foverjoyed.png?alt=media&token=74cd2691-ba74-487e-adbe-8e95d68ce675';
 }
+
+class test {
+  static const String confirmationExit =
+      'https://firebasestorage.googleapis.com/v0/b/calmode.appspot.com/o/Test%2Fconfirmation%20exit%20test.png?alt=media&token=4298578d-12ba-46f6-9cc9-9f3d8ea138d2';
+  static const String minimalOrNone =
+      'https://firebasestorage.googleapis.com/v0/b/calmode.appspot.com/o/Test%2Fminimal%20or%20none.png?alt=media&token=0312a02c-5eae-47fd-8075-c2b2e6bc8430';
+  static const String mild =
+      'https://firebasestorage.googleapis.com/v0/b/calmode.appspot.com/o/Test%2Fmild.png?alt=media&token=1ed48245-cfc5-43f9-89d2-ae3b94821ef8';
+  static const String moderate =
+      'https://firebasestorage.googleapis.com/v0/b/calmode.appspot.com/o/Test%2Fmoderate.png?alt=media&token=8bc8075e-8966-42eb-93af-957b151b742a';
+  static const String moderatelySevere =
+      'https://firebasestorage.googleapis.com/v0/b/calmode.appspot.com/o/Test%2Fmoderately%20severe.png?alt=media&token=546851dc-392c-44a9-a7e3-dbc5c3900f2b';
+  static const String severe =
+      'https://firebasestorage.googleapis.com/v0/b/calmode.appspot.com/o/Test%2Fsevere.png?alt=media&token=e07d2603-f96b-4f88-a9ca-64f5f924dd2b';
+}

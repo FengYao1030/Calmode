@@ -1,6 +1,5 @@
-import 'package:calmode/other/profile.dart';
-import 'package:calmode/record_diary/diary_history.dart';
 import 'package:calmode/services/firebase_options.dart';
+import 'package:calmode/test/phq9_test.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -23,7 +22,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: Profile(),
+      home: const PHQ9Test(),
     );
   }
 }

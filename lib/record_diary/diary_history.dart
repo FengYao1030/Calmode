@@ -1,5 +1,5 @@
 import 'package:calmode/record_diary/daily_diary.dart';
-import 'package:calmode/record_diary/mood_selection.dart';
+//import 'package:calmode/record_diary/mood_selection.dart';
 import 'package:flutter/material.dart';
 
 class DailyHistory extends StatefulWidget {
