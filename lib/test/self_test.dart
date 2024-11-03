@@ -61,7 +61,7 @@ class _SelfTestState extends State<SelfTest> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => PHQ9Test()),
+                      MaterialPageRoute(builder: (context) => const PHQ9Test()),
                     );
                   },
                 ),
@@ -75,7 +75,7 @@ class _SelfTestState extends State<SelfTest> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => PHQ9Test()),
+                      MaterialPageRoute(builder: (context) => const PHQ9Test()),
                     );
                   },
                 ),

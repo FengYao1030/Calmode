@@ -1,4 +1,5 @@
 import 'package:calmode/other/link.dart';
+import 'package:calmode/test/confirmation.dart';
 import 'package:calmode/test/phq9_result.dart';
 import 'package:calmode/test/result_utils.dart';
 //import 'package:calmode/test/result.dart';
@@ -26,62 +27,15 @@ class _PHQ9TestState extends State<PHQ9Test> {
     "Thoughts that you would be better off dead or hurting yourself"
   ];
 
-  final List<List<String>> options = [
-    [
-      "Not at all", // 0
-      "Several days", // +1
-      "More than half the days", // +2
-      "Nearly every day" // +3
-    ],
-    [
-      "Not at all",
-      "Several days",
-      "More than half the days",
-      "Nearly every day"
-    ],
-    [
-      "Not at all",
-      "Several days",
-      "More than half the days",
-      "Nearly every day"
-    ],
-    [
-      "Not at all",
-      "Several days",
-      "More than half the days",
-      "Nearly every day"
-    ],
-    [
-      "Not at all",
-      "Several days",
-      "More than half the days",
-      "Nearly every day"
-    ],
-    [
-      "Not at all",
-      "Several days",
-      "More than half the days",
-      "Nearly every day"
-    ],
-    [
-      "Not at all",
-      "Several days",
-      "More than half the days",
-      "Nearly every day"
-    ],
-    [
-      "Not at all",
-      "Several days",
-      "More than half the days",
-      "Nearly every day"
-    ],
-    [
-      "Not at all",
-      "Several days",
-      "More than half the days",
-      "Nearly every day"
-    ],
+  final List<String> commonOptions = [
+    "Not at all", // 0
+    "Several days", // +1
+    "More than half the days", // +2
+    "Nearly every day" // +3
   ];
+
+  late List<List<String>>
+      options; // Declare the options list without initialization
 
   final List<IconData> optionIcons = [
     Icons.favorite_outline_sharp,
@@ -92,6 +46,12 @@ class _PHQ9TestState extends State<PHQ9Test> {
 
   List<int> selectedOptions = List.filled(9, -1);
   int currentIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    options = List.generate(9, (index) => commonOptions);
+  }
 
   void _showSnackbar() {
     ScaffoldMessenger.of(context).showSnackBar(
@@ -290,7 +250,8 @@ class _PHQ9TestState extends State<PHQ9Test> {
   }
 
   void _showConfirmationDialog() {
-    showDialog(
+    showConfirmationDialog(context, imageUrl);
+    /*showDialog(
       context: context,
       builder: (context) => Dialog(
         shape: RoundedRectangleBorder(
@@ -347,6 +308,6 @@ class _PHQ9TestState extends State<PHQ9Test> {
           ),
         ),
       ),
-    );
+    );*/
   }
 }
