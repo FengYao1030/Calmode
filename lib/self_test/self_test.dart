@@ -1,4 +1,7 @@
-import 'package:calmode/test/phq9_test.dart';
+import 'package:calmode/exercise/exercise.dart';
+import 'package:calmode/other/homepage.dart';
+import 'package:calmode/other/profile.dart';
+import 'package:calmode/self_test/phq9_test.dart';
 import 'package:flutter/material.dart';
 
 class SelfTest extends StatefulWidget {
@@ -11,10 +14,17 @@ class SelfTest extends StatefulWidget {
 class _SelfTestState extends State<SelfTest> {
   int _selectedIndex = 1;
 
+  final List<Widget> _pages = [
+    const HomePage(),
+    const SelfTest(),
+    const Exercise(),
+    const Profile(),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: const Color.fromRGBO(247, 244, 242, 1),
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: const Color.fromRGBO(79, 52, 34, 1),
@@ -85,11 +95,16 @@ class _SelfTestState extends State<SelfTest> {
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: const Color.fromRGBO(247, 244, 242, 1),
         currentIndex: _selectedIndex,
         onTap: (index) {
           setState(() {
             _selectedIndex = index;
           });
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => _pages[index]),
+          );
         },
         items: [
           _buildBottomNavItem(Icons.house_outlined, 'Home', 0),
@@ -99,6 +114,8 @@ class _SelfTestState extends State<SelfTest> {
         ],
         selectedItemColor: Colors.brown,
         unselectedItemColor: Colors.brown.withOpacity(0.6),
+        showUnselectedLabels: true,
+        type: BottomNavigationBarType.fixed,
       ),
     );
   }
@@ -112,15 +129,17 @@ class _SelfTestState extends State<SelfTest> {
   }
 
   Widget _buildNavIcon(IconData icon, int index) {
+    bool isSelected = _selectedIndex == index;
     return Container(
-      padding: const EdgeInsets.all(8),
+      padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: index == _selectedIndex
-            ? Colors.brown.withOpacity(0.2)
-            : Colors.transparent,
+        color: isSelected ? Colors.brown : Colors.transparent,
       ),
-      child: Icon(icon, color: Colors.brown),
+      child: Icon(
+        icon,
+        color: isSelected ? Colors.white : Colors.brown.withOpacity(0.6),
+      ),
     );
   }
 

@@ -1,4 +1,4 @@
-class other {
+class Other {
   static const String logo =
       'https://firebasestorage.googleapis.com/v0/b/calmode.appspot.com/o/Other%2Flogo.png?alt=media&token=526d3db9-6753-45a4-a519-9686e0f77cb3';
   static const String profileBackground =
@@ -22,10 +22,12 @@ class mood {
       'https://firebasestorage.googleapis.com/v0/b/calmode.appspot.com/o/Daily%20Diary%2Fhappy.png?alt=media&token=b5be5409-7528-4260-9a2b-b02480ee165f';
   static const String overjoyed =
       'https://firebasestorage.googleapis.com/v0/b/calmode.appspot.com/o/Daily%20Diary%2Foverjoyed.png?alt=media&token=74cd2691-ba74-487e-adbe-8e95d68ce675';
+  static const String confirmationExitDiary =
+      'https://firebasestorage.googleapis.com/v0/b/calmode.appspot.com/o/Daily%20Diary%2Fconfirmation%20exit%20diary.png?alt=media&token=4cd1d0c9-e988-4180-a851-9b3d6535ad4e';
 }
 
-class test {
-  static const String confirmationExit =
+class Test {
+  static const String confirmationExitTest =
       'https://firebasestorage.googleapis.com/v0/b/calmode.appspot.com/o/Test%2Fconfirmation%20exit%20test.png?alt=media&token=4298578d-12ba-46f6-9cc9-9f3d8ea138d2';
   static const String minimalOrNone =
       'https://firebasestorage.googleapis.com/v0/b/calmode.appspot.com/o/Test%2Fminimal%20or%20none.png?alt=media&token=0312a02c-5eae-47fd-8075-c2b2e6bc8430';
@@ -37,4 +39,15 @@ class test {
       'https://firebasestorage.googleapis.com/v0/b/calmode.appspot.com/o/Test%2Fmoderately%20severe.png?alt=media&token=546851dc-392c-44a9-a7e3-dbc5c3900f2b';
   static const String severe =
       'https://firebasestorage.googleapis.com/v0/b/calmode.appspot.com/o/Test%2Fsevere.png?alt=media&token=e07d2603-f96b-4f88-a9ca-64f5f924dd2b';
+}
+
+class Audio {
+  static const String earphone =
+      'https://firebasestorage.googleapis.com/v0/b/calmode.appspot.com/o/Exercise%2Fearphone.png?alt=media&token=a5857568-f667-4834-be9e-ec6a609415d1';
+  static const String runningDay =
+      'https://firebasestorage.googleapis.com/v0/b/calmode.appspot.com/o/Exercise%2Frunning%20day.png?alt=media&token=595d823a-a3e9-49e9-91d1-a02f05e2bf84';
+  static const String forestWaterfall =
+      'https://firebasestorage.googleapis.com/v0/b/calmode.appspot.com/o/Exercise%2Fforest%20waterfall.png?alt=media&token=8e7f34ee-eaab-4607-b5b1-750edf86739a';
+  static const String oceanSea =
+      'https://firebasestorage.googleapis.com/v0/b/calmode.appspot.com/o/Exercise%2Focean%20sea.png?alt=media&token=16821db8-cbd7-48dc-8e11-63fe52a0500b';
 }

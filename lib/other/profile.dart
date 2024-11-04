@@ -1,5 +1,8 @@
+import 'package:calmode/exercise/exercise.dart';
+import 'package:calmode/other/homepage.dart';
 import 'package:calmode/other/link.dart';
-import 'package:calmode/screens/sign_in.dart';
+import 'package:calmode/auth/sign_in.dart';
+import 'package:calmode/self_test/self_test.dart';
 import 'package:flutter/material.dart';
 
 class Profile extends StatefulWidget {
@@ -10,14 +13,22 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  final String imageUrl = other.profileBackground;
-  final String imageUrl2 = other.profileDetailsBackground;
+  final String imageUrl = Other.profileBackground;
+  final String imageUrl2 = Other.profileDetailsBackground;
   //final String imageUrl3 = other.profileImage;
   int _selectedIndex = 3;
+
+  final List<Widget> _pages = [
+    const HomePage(),
+    const SelfTest(),
+    const Exercise(),
+    const Profile(),
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromRGBO(247, 244, 242, 1),
       body: Stack(
         children: [
           // Full-width background image (for AppBar and body)
@@ -185,11 +196,16 @@ class _ProfileState extends State<Profile> {
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: const Color.fromRGBO(247, 244, 242, 1),
         currentIndex: _selectedIndex,
         onTap: (index) {
           setState(() {
             _selectedIndex = index;
           });
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => _pages[index]),
+          );
         },
         items: [
           _buildBottomNavItem(Icons.house_outlined, 'Home', 0),
@@ -199,6 +215,8 @@ class _ProfileState extends State<Profile> {
         ],
         selectedItemColor: Colors.brown,
         unselectedItemColor: Colors.brown.withOpacity(0.6),
+        showUnselectedLabels: true,
+        type: BottomNavigationBarType.fixed,
       ),
     );
   }
@@ -212,15 +230,17 @@ class _ProfileState extends State<Profile> {
   }
 
   Widget _buildNavIcon(IconData icon, int index) {
+    bool isSelected = _selectedIndex == index;
     return Container(
-      padding: const EdgeInsets.all(8),
+      padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: _selectedIndex == index
-            ? Colors.brown.withOpacity(0.2)
-            : Colors.transparent,
+        color: isSelected ? Colors.brown : Colors.transparent,
       ),
-      child: Icon(icon, color: Colors.brown),
+      child: Icon(
+        icon,
+        color: isSelected ? Colors.white : Colors.brown.withOpacity(0.6),
+      ),
     );
   }
 }

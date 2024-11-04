@@ -1,5 +1,5 @@
-import 'package:calmode/other/homepage.dart';
-import 'package:calmode/screens/sign_in.dart';
+import 'package:calmode/other/fill_up_info.dart';
+import 'package:calmode/auth/sign_in.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -60,9 +60,9 @@ class AuthService {
       ScaffoldMessenger.of(context)
           .showSnackBar(_customSnackBar('Registration successful!'));
 
-      // Navigate to the HomePage upon successful registration
+      // Navigate to the FillUpInfo upon successful registration
       Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (context) => const HomePage()),
+        MaterialPageRoute(builder: (context) => const FillUpInfo()),
         (Route<dynamic> route) => false, // Clear the navigation stack
       );
     } on FirebaseAuthException catch (e) {

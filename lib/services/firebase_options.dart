@@ -65,5 +65,4 @@ class DefaultFirebaseOptions {
     storageBucket: 'calmode.appspot.com',
     iosBundleId: 'com.example.calmode',
   );
-
 }

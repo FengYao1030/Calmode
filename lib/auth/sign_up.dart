@@ -1,8 +1,9 @@
-import 'package:calmode/screens/register.dart';
+import 'package:calmode/auth/register.dart';
+import 'package:calmode/other/fill_up_info.dart';
 import 'package:calmode/services/auth_services.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:calmode/screens/sign_in.dart';
+import 'package:calmode/auth/sign_in.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});
@@ -53,7 +54,7 @@ class _SignUpState extends State<SignUp> {
         // Navigate to the Profile page after a short delay
         Future.delayed(const Duration(seconds: 1), () {
           Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => const Profile()),
+            MaterialPageRoute(builder: (context) => const FillUpInfo()),
           );
         });
       } catch (e) {

@@ -1,3 +1,4 @@
+import 'package:calmode/other/homepage.dart';
 import 'package:flutter/material.dart';
 
 class FillUpInfo extends StatefulWidget {
@@ -12,6 +13,19 @@ class _FillUpInfoState extends State<FillUpInfo> {
   String? _gender = ''; // To store selected gender
   String? _birthYear; // Use String? to allow null values
   bool _isLoading = false;
+
+  SnackBar _customSnackBar(String message,
+      {Color backgroundColor = Colors.black}) {
+    return SnackBar(
+      content: Text(message),
+      backgroundColor: backgroundColor,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8.0),
+      ),
+      behavior: SnackBarBehavior.floating,
+      margin: const EdgeInsets.all(16),
+    );
+  }
 
   List<String> _generateYears() {
     int currentYear = DateTime.now().year;
@@ -40,9 +54,14 @@ class _FillUpInfoState extends State<FillUpInfo> {
       setState(() {
         _isLoading = false;
       });
+
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const HomePage()),
+      );
       // Show success message
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Information submitted successfully!')),
+        _customSnackBar('Information submitted successfully!'),
       );
     });
   }
@@ -312,7 +331,7 @@ class _FillUpInfoState extends State<FillUpInfo> {
                           width: 10,
                         ),
                       ),
-                      //contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 30), 
+                      //contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 30),
                       hintText:
                           'Select your birth year', // set the text at the center and at left
                       hintStyle: TextStyle(color: Colors.grey),

@@ -1,3 +1,4 @@
+import 'package:calmode/other/homepage.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -27,7 +28,10 @@ class MoodHistory extends StatelessWidget {
           icon: const Icon(Icons.arrow_back_ios_new_outlined,
               color: Colors.white),
           onPressed: () {
-            Navigator.pop(context);
+            Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const HomePage()),
+                    );
           },
         ),
       ),

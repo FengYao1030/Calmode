@@ -1,4 +1,7 @@
+import 'package:calmode/other/homepage.dart';
+import 'package:calmode/other/link.dart';
 import 'package:calmode/record_diary/mood_selection.dart';
+import 'package:calmode/self_test/confirmation.dart';
 import 'package:flutter/material.dart';
 
 class DailyDiary extends StatefulWidget {
@@ -45,6 +48,22 @@ class _DailyDiaryState extends State<DailyDiary> {
     }
   }
 
+  void _onExitTest(BuildContext context) {
+    String imageUrl = mood.confirmationExitDiary;
+    String message =
+        'Are you sure want to exit your diary? The writing will be loss.';
+
+    showConfirmationDialog(context, imageUrl, message).then((confirmed) {
+      if (confirmed == true) {
+        // If the user confirmed exit, navigate to the specific page (SelfTest)
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => const HomePage()),
+        );
+      }
+      // If confirmed is false (cancel), do nothing (just close the dialog)
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,10 +71,9 @@ class _DailyDiaryState extends State<DailyDiary> {
         backgroundColor: const Color.fromRGBO(247, 244, 242, 1),
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new_outlined,
-              color: Color.fromRGBO(79, 52, 34, 1)),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
+            icon: const Icon(Icons.arrow_back_ios_new_outlined,
+                color: Color.fromRGBO(79, 52, 34, 1)),
+            onPressed: () => _onExitTest(context)),
         title: const Row(
           children: [
             SizedBox(width: 8), // Space between arrow and title

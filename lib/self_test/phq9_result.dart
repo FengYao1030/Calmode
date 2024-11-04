@@ -1,5 +1,5 @@
-import 'package:calmode/test/result_utils.dart';
-import 'package:calmode/test/self_test.dart';
+import 'package:calmode/self_test/result_utils.dart';
+import 'package:calmode/self_test/self_test.dart';
 import 'package:flutter/material.dart';
 
 class PHQ9Result extends StatelessWidget {

@@ -1,7 +1,7 @@
 import 'package:calmode/other/homepage.dart';
 import 'package:calmode/other/link.dart';
 import 'package:calmode/services/auth_services.dart';
-import 'package:calmode/screens/sign_up.dart';
+import 'package:calmode/auth/sign_up.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
@@ -21,7 +21,7 @@ class _SignInState extends State<SignIn> {
   bool _isLoading = false;
   String? _errorMessage; // To hold error messages
 
-  final String imageUrl = other.logo;
+  final String imageUrl = Other.logo;
 
   Future<void> _login() async {
     if (_formKey.currentState!.validate()) {

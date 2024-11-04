@@ -1,4 +1,8 @@
+import 'package:calmode/exercise/exercise.dart';
 import 'package:calmode/other/link.dart';
+import 'package:calmode/other/profile.dart';
+import 'package:calmode/record_diary/daily_diary.dart';
+import 'package:calmode/self_test/self_test.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -10,15 +14,22 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final String imageUrl = other.homepageIcon;
-  int _selectedIndex = 3;
+  final String imageUrl = Other.homepageIcon;
+  int _selectedIndex = 0;
+
+  final List<Widget> _pages = [
+    const HomePage(),
+    const SelfTest(),
+    const Exercise(),
+    const Profile(),
+  ];
 
   @override
   Widget build(BuildContext context) {
     String currentDate = DateFormat('EEE d MMM yyyy').format(DateTime.now());
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: const Color.fromRGBO(247, 244, 242, 1),
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -100,7 +111,13 @@ class _HomePageState extends State<HomePage> {
                   ),
                   const SizedBox(height: 16),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const DailyDiary()),
+                      );
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color.fromRGBO(
                           155, 177, 104, 1), // Light green color
@@ -187,7 +204,12 @@ class _HomePageState extends State<HomePage> {
               child: SizedBox(
                 width: 360,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const SelfTest()),
+                    );
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color.fromRGBO(255, 191, 31, 1),
                     padding: const EdgeInsets.symmetric(
@@ -229,11 +251,16 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: const Color.fromRGBO(247, 244, 242, 1),
         currentIndex: _selectedIndex,
         onTap: (index) {
           setState(() {
             _selectedIndex = index;
           });
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => _pages[index]),
+          );
         },
         items: [
           _buildBottomNavItem(Icons.house_outlined, 'Home', 0),
@@ -243,6 +270,8 @@ class _HomePageState extends State<HomePage> {
         ],
         selectedItemColor: Colors.brown,
         unselectedItemColor: Colors.brown.withOpacity(0.6),
+        showUnselectedLabels: true,
+        type: BottomNavigationBarType.fixed,
       ),
     );
   }
@@ -256,15 +285,17 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildNavIcon(IconData icon, int index) {
+    bool isSelected = _selectedIndex == index;
     return Container(
-      padding: const EdgeInsets.all(8),
+      padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: _selectedIndex == index
-            ? Colors.brown.withOpacity(0.2)
-            : Colors.transparent,
+        color: isSelected ? Colors.brown : Colors.transparent,
       ),
-      child: Icon(icon, color: Colors.brown),
+      child: Icon(
+        icon,
+        color: isSelected ? Colors.white : Colors.brown.withOpacity(0.6),
+      ),
     );
   }
 }

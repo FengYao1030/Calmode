@@ -1,9 +1,8 @@
 import 'package:calmode/other/link.dart';
-import 'package:calmode/test/confirmation.dart';
-import 'package:calmode/test/phq9_result.dart';
-import 'package:calmode/test/result_utils.dart';
-//import 'package:calmode/test/result.dart';
-import 'package:calmode/test/self_test.dart';
+import 'package:calmode/self_test/confirmation.dart';
+import 'package:calmode/self_test/phq9_result.dart';
+import 'package:calmode/self_test/result_utils.dart';
+import 'package:calmode/self_test/self_test.dart';
 import 'package:flutter/material.dart';
 
 class PHQ9Test extends StatefulWidget {
@@ -14,7 +13,7 @@ class PHQ9Test extends StatefulWidget {
 }
 
 class _PHQ9TestState extends State<PHQ9Test> {
-  final String imageUrl = test.confirmationExit;
+  final String imageUrl = Test.confirmationExitTest;
   final List<String> questions = [
     "Little interest or pleasure in doing things",
     "Feeling down, depressed, or hopeless",
@@ -44,6 +43,21 @@ class _PHQ9TestState extends State<PHQ9Test> {
     Icons.hourglass_empty_rounded,
   ];
 
+  void _onExitTest(BuildContext context) {
+    String imageUrl = Test.confirmationExitTest;
+    String message =
+        'Are you sure you want to exit the test? Your progress will be lost.';
+
+    showConfirmationDialog(context, imageUrl, message).then((confirmed) {
+    if (confirmed == true) {
+      // If the user confirmed exit, navigate to the specific page (SelfTest)
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => const SelfTest()),
+      );
+    }
+    // If confirmed is false (cancel), do nothing (just close the dialog)
+  });
+}
   List<int> selectedOptions = List.filled(9, -1);
   int currentIndex = 0;
 
@@ -88,7 +102,7 @@ class _PHQ9TestState extends State<PHQ9Test> {
                 currentIndex--; // Go to the previous question
               });
             } else {
-              _showConfirmationDialog(); // Show confirmation if on the first question
+              _onExitTest(context);
             }
           },
         ),
@@ -249,9 +263,9 @@ class _PHQ9TestState extends State<PHQ9Test> {
     );
   }
 
-  void _showConfirmationDialog() {
-    showConfirmationDialog(context, imageUrl);
-    /*showDialog(
+  /*void _showConfirmationDialog() {
+    showConfirmationDialog(context, imageUrl, message);
+    showDialog(
       context: context,
       builder: (context) => Dialog(
         shape: RoundedRectangleBorder(
@@ -308,6 +322,6 @@ class _PHQ9TestState extends State<PHQ9Test> {
           ),
         ),
       ),
-    );*/
-  }
+    );
+  }*/
 }

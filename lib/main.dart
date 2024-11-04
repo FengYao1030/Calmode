@@ -1,5 +1,7 @@
+import 'package:calmode/auth/sign_in.dart';
+import 'package:calmode/other/fill_up_info.dart';
+import 'package:calmode/other/homepage.dart';
 import 'package:calmode/services/firebase_options.dart';
-import 'package:calmode/test/phq9_test.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -22,7 +24,13 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const PHQ9Test(),
+      home: HomePage(),
     );
   }
 }
+
+
+/*
+- snackbar (check need or not)
+- other see any need to be better
+*/
