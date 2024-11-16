@@ -1,5 +1,3 @@
-import 'package:calmode/auth/sign_in.dart';
-import 'package:calmode/other/fill_up_info.dart';
 import 'package:calmode/other/homepage.dart';
 import 'package:calmode/services/firebase_options.dart';
 import 'package:flutter/material.dart';

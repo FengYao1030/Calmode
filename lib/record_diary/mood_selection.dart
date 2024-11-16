@@ -1,4 +1,3 @@
-import 'package:calmode/other/link.dart';
 import 'package:calmode/record_diary/mode_selector.dart';
 import 'package:calmode/record_diary/mood_history.dart';
 import 'package:calmode/record_diary/mood_model.dart';

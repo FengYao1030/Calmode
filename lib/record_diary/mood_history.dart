@@ -1,5 +1,4 @@
 import 'package:calmode/other/homepage.dart';
-import 'package:calmode/other/link.dart';
 import 'package:calmode/record_diary/diary_history.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';

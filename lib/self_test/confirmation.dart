@@ -1,4 +1,3 @@
-import 'package:calmode/self_test/self_test.dart';
 import 'package:flutter/material.dart';
 
 /*Future<void> showConfirmationDialog(BuildContext context, String imageUrl) {

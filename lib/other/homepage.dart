@@ -9,7 +9,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:calmode/record_diary/mood_history.dart';
 import 'package:calmode/services/diary_storage.dart';
-import 'package:calmode/record_diary/diary_entry_model.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
