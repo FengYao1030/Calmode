@@ -5,6 +5,11 @@ import 'package:calmode/record_diary/daily_diary.dart';
 import 'package:calmode/self_test/self_test.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:calmode/record_diary/mood_history.dart';
+import 'package:calmode/services/diary_storage.dart';
+import 'package:calmode/record_diary/diary_entry_model.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -14,15 +19,64 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  String _nickname = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserNickname();
+  }
+
+  Future<void> _loadUserNickname() async {
+    try {
+      final doc = await _firestore
+          .collection('users')
+          .doc(_auth.currentUser?.uid)
+          .get();
+
+      if (doc.exists && mounted) {
+        setState(() {
+          _nickname = doc.data()?['nickname'] ?? 'User';
+        });
+      }
+    } catch (e) {
+      debugPrint('Error loading nickname: $e');
+    }
+  }
+
   final String imageUrl = Other.homepageIcon;
   int _selectedIndex = 0;
 
   final List<Widget> _pages = [
     const HomePage(),
+    const MoodHistory(diaryEntries: []),
     const SelfTest(),
     const Exercise(),
     const Profile(),
   ];
+
+  void _navigateToPage(int index) async {
+    if (index == 1) {  // Diary tab
+      // Fetch diary entries and navigate to MoodHistory
+      final diaryStorage = DiaryStorage();
+      final entries = await diaryStorage.getDiaryEntries();
+      if (mounted) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => MoodHistory(diaryEntries: entries),
+          ),
+        );
+      }
+    } else {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => _pages[index]),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,22 +111,22 @@ class _HomePageState extends State<HomePage> {
                             const TextStyle(color: Colors.white, fontSize: 12),
                       ),
                       const SizedBox(height: 20),
-                      const Row(
+                      Row(
                         children: [
-                          SizedBox(width: 14),
+                          const SizedBox(width: 14),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Hi, Shinomiya!',
-                                style: TextStyle(
+                                'Hi, $_nickname!',
+                                style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 24,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              SizedBox(height: 4),
-                              Text(
+                              const SizedBox(height: 4),
+                              const Text(
                                 'Your mental health matters: take the first step today',
                                 style: TextStyle(
                                   color: Colors.white,
@@ -257,16 +311,14 @@ class _HomePageState extends State<HomePage> {
           setState(() {
             _selectedIndex = index;
           });
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => _pages[index]),
-          );
+          _navigateToPage(index);
         },
         items: [
           _buildBottomNavItem(Icons.house_outlined, 'Home', 0),
-          _buildBottomNavItem(Icons.lightbulb_outline_rounded, 'Test', 1),
-          _buildBottomNavItem(Icons.directions_walk_outlined, 'Exercise', 2),
-          _buildBottomNavItem(Icons.person_outline_outlined, 'Profile', 3),
+          _buildBottomNavItem(Icons.book_outlined, 'Diary', 1),
+          _buildBottomNavItem(Icons.lightbulb_outline_rounded, 'Test', 2),
+          _buildBottomNavItem(Icons.directions_walk_outlined, 'Exercise', 3),
+          _buildBottomNavItem(Icons.person_outline_outlined, 'Profile', 4),
         ],
         selectedItemColor: Colors.brown,
         unselectedItemColor: Colors.brown.withOpacity(0.6),

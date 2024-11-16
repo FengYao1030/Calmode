@@ -1,5 +1,7 @@
 import 'package:calmode/other/homepage.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FillUpInfo extends StatefulWidget {
   const FillUpInfo({Key? key}) : super(key: key);
@@ -9,6 +11,9 @@ class FillUpInfo extends StatefulWidget {
 }
 
 class _FillUpInfoState extends State<FillUpInfo> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
   final TextEditingController _nicknameController = TextEditingController();
   String? _gender = ''; // To store selected gender
   String? _birthYear; // Use String? to allow null values
@@ -33,11 +38,10 @@ class _FillUpInfoState extends State<FillUpInfo> {
         currentYear - 1899, (index) => (currentYear - index).toString());
   }
 
-  void _basicInfo() {
+  void _basicInfo() async {
     if (_nicknameController.text.isEmpty ||
         _gender == null ||
         _birthYear == null) {
-      // Show error if fields are not filled
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Please fill all fields')),
       );
@@ -48,22 +52,34 @@ class _FillUpInfoState extends State<FillUpInfo> {
       _isLoading = true;
     });
 
-    // Simulate a network request or processing
-    Future.delayed(const Duration(seconds: 2), () {
-      // Process the information (e.g., save to a database)
-      setState(() {
-        _isLoading = false;
+    try {
+      // Save user info to Firestore
+      await _firestore.collection('users').doc(_auth.currentUser?.uid).set({
+        'nickname': _nicknameController.text,
+        'gender': _gender,
+        'birthYear': _birthYear,
+        'createdAt': FieldValue.serverTimestamp(),
       });
 
+      // Navigate to HomePage
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const HomePage()),
       );
-      // Show success message
+
       ScaffoldMessenger.of(context).showSnackBar(
         _customSnackBar('Information submitted successfully!'),
       );
-    });
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        _customSnackBar('Error saving information. Please try again.',
+            backgroundColor: Colors.red),
+      );
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
+    }
   }
 
   @override

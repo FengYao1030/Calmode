@@ -1,11 +1,17 @@
 import 'package:calmode/other/homepage.dart';
 import 'package:calmode/other/link.dart';
+import 'package:calmode/record_diary/diary_entry_model.dart';
 import 'package:calmode/record_diary/mood_selection.dart';
 import 'package:calmode/self_test/confirmation.dart';
 import 'package:flutter/material.dart';
 
 class DailyDiary extends StatefulWidget {
-  const DailyDiary({super.key});
+  final DiaryEntry? existingEntry;
+
+  const DailyDiary({
+    super.key,
+    this.existingEntry,
+  });
 
   @override
   _DailyDiaryState createState() => _DailyDiaryState();
@@ -29,6 +35,11 @@ class _DailyDiaryState extends State<DailyDiary> {
   @override
   void initState() {
     super.initState();
+    // Pre-fill with existing content if available
+    if (widget.existingEntry?.content != null) {
+      _controller.text = widget.existingEntry!.content!;
+      _updateWordCount();
+    }
     _controller.addListener(_updateWordCount);
   }
 
@@ -43,7 +54,11 @@ class _DailyDiaryState extends State<DailyDiary> {
     if (_currentWordCount > 0) {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const MoodSelection()),
+        MaterialPageRoute(
+          builder: (context) => MoodSelection(
+            diaryContent: _controller.text,
+          ),
+        ),
       );
     }
   }

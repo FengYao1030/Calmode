@@ -1,9 +1,16 @@
 import 'package:calmode/record_diary/daily_diary.dart';
+import 'package:calmode/record_diary/diary_entry_model.dart';
 //import 'package:calmode/record_diary/mood_selection.dart';
 import 'package:flutter/material.dart';
+import 'package:calmode/services/diary_storage.dart';
 
 class DailyHistory extends StatefulWidget {
-  const DailyHistory({super.key});
+  final DiaryEntry? entry;
+
+  const DailyHistory({
+    super.key,
+    this.entry,
+  });
 
   @override
   _DailyHistoryState createState() => _DailyHistoryState();
@@ -12,6 +19,9 @@ class DailyHistory extends StatefulWidget {
 class _DailyHistoryState extends State<DailyHistory> {
   final TextEditingController _controller = TextEditingController();
   final int _maxWordCount = 250;
+  final DiaryStorage _diaryStorage = DiaryStorage();
+  bool _isLoading = false;
+  DiaryEntry? _currentEntry;
 
   int _currentWordCount = 0;
 
@@ -27,7 +37,27 @@ class _DailyHistoryState extends State<DailyHistory> {
   @override
   void initState() {
     super.initState();
-    _controller.addListener(_updateWordCount);
+    _loadEntry();
+  }
+
+  Future<void> _loadEntry() async {
+    if (widget.entry == null) return;
+
+    setState(() => _isLoading = true);
+    try {
+      final entry = await _diaryStorage.getDiaryEntryByDate(widget.entry!.date);
+      if (entry != null) {
+        setState(() {
+          _currentEntry = entry;
+          _controller.text = entry.content ?? '';
+          _updateWordCount();
+        });
+      }
+    } catch (e) {
+      debugPrint('Error loading diary entry: $e');
+    } finally {
+      setState(() => _isLoading = false);
+    }
   }
 
   @override
@@ -40,12 +70,40 @@ class _DailyHistoryState extends State<DailyHistory> {
   void _navigateToNextPage() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => const DailyDiary()),
+      MaterialPageRoute(
+        builder: (context) => DailyDiary(existingEntry: widget.entry),
+      ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    if (_isLoading) {
+      return const Scaffold(
+        body: Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
+    }
+
+    if (widget.entry == null) {
+      return Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          elevation: 0,
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back_ios_new_outlined,
+                color: Color.fromRGBO(79, 52, 34, 1)),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+          title: const Text('Daily History'),
+        ),
+        body: const Center(
+          child: Text('No diary entry found for this day'),
+        ),
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,

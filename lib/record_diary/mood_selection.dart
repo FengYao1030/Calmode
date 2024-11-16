@@ -1,8 +1,10 @@
-//import 'package:calmode/other/link.dart';
+import 'package:calmode/other/link.dart';
 import 'package:calmode/record_diary/mode_selector.dart';
 import 'package:calmode/record_diary/mood_history.dart';
 import 'package:calmode/record_diary/mood_model.dart';
+import 'package:calmode/services/diary_storage.dart';
 import 'package:flutter/material.dart';
+import 'diary_entry_model.dart';
 
 /*const String imageUrl = mood.depressed;
 const String imageUrl2 = mood.sad;
@@ -19,7 +21,12 @@ final List<Mood> moods = [
 ];*/
 
 class MoodSelection extends StatefulWidget {
-  const MoodSelection({super.key});
+  final String diaryContent;
+
+  const MoodSelection({
+    super.key,
+    required this.diaryContent,
+  });
 
   @override
   _MoodSelectionState createState() => _MoodSelectionState();
@@ -27,11 +34,45 @@ class MoodSelection extends StatefulWidget {
 
 class _MoodSelectionState extends State<MoodSelection> {
   int _selectedMoodIndex = 2; // Default to "Neutral"
+  final DiaryStorage _diaryStorage = DiaryStorage();
 
   void _setMood(int index) {
     setState(() {
       _selectedMoodIndex = index;
     });
+  }
+
+  void _saveDiaryEntry() async {
+    final Mood selectedMood = moods[_selectedMoodIndex];
+    
+    final entry = DiaryEntry(
+      date: DateTime.now(),
+      content: widget.diaryContent,
+      mood: selectedMood.label,
+      moodImage: selectedMood.imageUrl,
+    );
+
+    try {
+      await _diaryStorage.saveDiaryEntry(entry);
+      
+      if (!mounted) return;
+      
+      // Get updated entries and navigate
+      final entries = await _diaryStorage.getDiaryEntries();
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => MoodHistory(diaryEntries: entries),
+        ),
+      );
+    } catch (e) {
+      debugPrint('Error saving diary entry: $e');
+      // Show error message to user
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Failed to save diary entry')),
+      );
+    }
   }
 
   @override
@@ -60,10 +101,13 @@ class _MoodSelectionState extends State<MoodSelection> {
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 40),
-          Image(
-            image: selectedMood.image.image,
+          Image.network(
+            selectedMood.imageUrl,
             width: 150,
             height: 150,
+            errorBuilder: (context, error, stackTrace) {
+              return const Icon(Icons.mood, size: 150);
+            },
           ),
           const SizedBox(height: 20),
           Text(
@@ -73,7 +117,8 @@ class _MoodSelectionState extends State<MoodSelection> {
           const SizedBox(height: 40),
           MoodSelector(
             selectedMoodIndex: _selectedMoodIndex,
-            onMoodSelected: _setMood, moods: moods, 
+            onMoodSelected: _setMood,
+            moods: moods,
           ),
           const SizedBox(height: 50),
           Align(
@@ -84,10 +129,7 @@ class _MoodSelectionState extends State<MoodSelection> {
                   left: 30,
                   right: 30), // Adjust for precise positioning
               child: ElevatedButton(
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => MoodHistory()));
-                },
+                onPressed: _saveDiaryEntry,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.white,
                   padding:
