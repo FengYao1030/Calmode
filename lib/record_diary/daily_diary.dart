@@ -19,7 +19,7 @@ class DailyDiary extends StatefulWidget {
 
 class _DailyDiaryState extends State<DailyDiary> {
   final TextEditingController _controller = TextEditingController();
-  final int _maxWordCount = 250;
+  final int _maxWordCount = 250; //limit text
 
   int _currentWordCount = 0;
 
