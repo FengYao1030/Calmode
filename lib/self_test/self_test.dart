@@ -1,8 +1,10 @@
 import 'package:calmode/exercise/exercise.dart';
 import 'package:calmode/other/homepage.dart';
 import 'package:calmode/other/profile.dart';
+import 'package:calmode/record_diary/mood_history.dart';
 import 'package:calmode/self_test/phq9_test.dart';
 import 'package:flutter/material.dart';
+import 'package:calmode/services/diary_storage.dart';
 
 class SelfTest extends StatefulWidget {
   const SelfTest({super.key});
@@ -12,10 +14,11 @@ class SelfTest extends StatefulWidget {
 }
 
 class _SelfTestState extends State<SelfTest> {
-  int _selectedIndex = 1;
+  int _selectedIndex = 2;
 
   final List<Widget> _pages = [
     const HomePage(),
+    MoodHistory(diaryEntries: const []),
     const SelfTest(),
     const Exercise(),
     const Profile(),
@@ -101,16 +104,14 @@ class _SelfTestState extends State<SelfTest> {
           setState(() {
             _selectedIndex = index;
           });
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => _pages[index]),
-          );
+          _navigateToPage(index);
         },
         items: [
           _buildBottomNavItem(Icons.house_outlined, 'Home', 0),
-          _buildBottomNavItem(Icons.lightbulb_outline_rounded, 'Test', 1),
-          _buildBottomNavItem(Icons.directions_walk_outlined, 'Exercise', 2),
-          _buildBottomNavItem(Icons.person_outline_outlined, 'Profile', 3),
+          _buildBottomNavItem(Icons.book_outlined, 'Diary', 1),
+          _buildBottomNavItem(Icons.lightbulb_outline_rounded, 'Test', 2),
+          _buildBottomNavItem(Icons.directions_walk_outlined, 'Exercise', 3),
+          _buildBottomNavItem(Icons.person_outline_outlined, 'Profile', 4),
         ],
         selectedItemColor: Colors.brown,
         unselectedItemColor: Colors.brown.withOpacity(0.6),
@@ -195,5 +196,25 @@ class _SelfTestState extends State<SelfTest> {
         ),
       ),
     );
+  }
+
+  void _navigateToPage(int index) async {
+    if (index == 1) {  // Diary tab
+      final diaryStorage = DiaryStorage();
+      final entries = await diaryStorage.getDiaryEntries();
+      if (mounted) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => MoodHistory(diaryEntries: entries),
+          ),
+        );
+      }
+    } else {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => _pages[index]),
+      );
+    }
   }
 }

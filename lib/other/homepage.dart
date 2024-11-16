@@ -50,14 +50,15 @@ class _HomePageState extends State<HomePage> {
 
   final List<Widget> _pages = [
     const HomePage(),
-    const MoodHistory(diaryEntries: []),
+    MoodHistory(diaryEntries: const []),
     const SelfTest(),
     const Exercise(),
     const Profile(),
   ];
 
   void _navigateToPage(int index) async {
-    if (index == 1) {  // Diary tab
+    if (index == 1) {
+      // Diary tab
       // Fetch diary entries and navigate to MoodHistory
       final diaryStorage = DiaryStorage();
       final entries = await diaryStorage.getDiaryEntries();

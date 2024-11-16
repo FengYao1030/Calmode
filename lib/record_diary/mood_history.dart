@@ -1,16 +1,34 @@
+import 'package:calmode/exercise/exercise.dart';
 import 'package:calmode/other/homepage.dart';
+import 'package:calmode/other/profile.dart';
 import 'package:calmode/record_diary/diary_history.dart';
+import 'package:calmode/self_test/self_test.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'diary_entry_model.dart';
 
-class MoodHistory extends StatelessWidget {
+class MoodHistory extends StatefulWidget {
   final List<DiaryEntry> diaryEntries;
 
   const MoodHistory({
     super.key,
     required this.diaryEntries,
   });
+
+  @override
+  State<MoodHistory> createState() => _MoodHistoryState();
+}
+
+class _MoodHistoryState extends State<MoodHistory> {
+  int _selectedIndex = 1;
+
+  final List<Widget> _pages = [
+    const HomePage(),
+    const MoodHistory(diaryEntries: []),
+    const SelfTest(),
+    const Exercise(),
+    const Profile(),
+  ];
 
   String formatDate(DateTime date) {
     return DateFormat('MMM dd').format(date).toUpperCase();
@@ -67,9 +85,9 @@ class MoodHistory extends StatelessWidget {
             padding: const EdgeInsets.only(
                 top: 125), // Adjust top padding to move content down
             child: ListView.builder(
-              itemCount: diaryEntries.length,
+              itemCount: widget.diaryEntries.length,
               itemBuilder: (context, index) {
-                final entry = diaryEntries[index];
+                final entry = widget.diaryEntries[index];
                 return Padding(
                   padding:
                       const EdgeInsets.only(left: 20, right: 20, bottom: 15),
@@ -108,8 +126,10 @@ class MoodHistory extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    entry.date != null 
-                                        ? DateFormat('MMM').format(entry.date).toUpperCase()
+                                    entry.date != null
+                                        ? DateFormat('MMM')
+                                            .format(entry.date)
+                                            .toUpperCase()
                                         : '',
                                     style: const TextStyle(
                                       color: Colors.brown,
@@ -118,7 +138,7 @@ class MoodHistory extends StatelessWidget {
                                     ),
                                   ),
                                   Text(
-                                    entry.date != null 
+                                    entry.date != null
                                         ? DateFormat('dd').format(entry.date)
                                         : '',
                                     style: const TextStyle(
@@ -164,6 +184,53 @@ class MoodHistory extends StatelessWidget {
             ),
           ),
         ],
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: const Color.fromRGBO(247, 244, 242, 1),
+        currentIndex: _selectedIndex,
+        onTap: (index) {
+          setState(() {
+            _selectedIndex = index;
+          });
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => _pages[index]),
+          );
+        },
+        items: [
+          _buildBottomNavItem(Icons.house_outlined, 'Home', 0),
+          _buildBottomNavItem(Icons.book_outlined, 'Diary', 1),
+          _buildBottomNavItem(Icons.lightbulb_outline_rounded, 'Test', 2),
+          _buildBottomNavItem(Icons.directions_walk_outlined, 'Exercise', 3),
+          _buildBottomNavItem(Icons.person_outline_outlined, 'Profile', 4),
+        ],
+        selectedItemColor: Colors.brown,
+        unselectedItemColor: Colors.brown.withOpacity(0.6),
+        showUnselectedLabels: true,
+        type: BottomNavigationBarType.fixed,
+      ),
+    );
+  }
+
+  BottomNavigationBarItem _buildBottomNavItem(
+      IconData icon, String label, int index) {
+    return BottomNavigationBarItem(
+      icon: _buildNavIcon(icon, index),
+      label: label, // Always show the label
+    );
+  }
+
+  Widget _buildNavIcon(IconData icon, int index) {
+    bool isSelected = _selectedIndex == index;
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: isSelected ? Colors.brown : Colors.transparent,
+      ),
+      child: Icon(
+        icon,
+        color: isSelected ? Colors.white : Colors.brown.withOpacity(0.6),
       ),
     );
   }

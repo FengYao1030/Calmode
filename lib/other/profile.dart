@@ -2,10 +2,12 @@ import 'package:calmode/exercise/exercise.dart';
 import 'package:calmode/other/homepage.dart';
 import 'package:calmode/other/link.dart';
 import 'package:calmode/auth/sign_in.dart';
+import 'package:calmode/record_diary/mood_history.dart';
 import 'package:calmode/self_test/self_test.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:calmode/services/diary_storage.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -18,10 +20,11 @@ class _ProfileState extends State<Profile> {
   final String imageUrl = Other.profileBackground;
   final String imageUrl2 = Other.profileDetailsBackground;
   //final String imageUrl3 = other.profileImage;
-  int _selectedIndex = 3;
+  int _selectedIndex = 4;
 
   final List<Widget> _pages = [
     const HomePage(),
+    MoodHistory(diaryEntries: const []),
     const SelfTest(),
     const Exercise(),
     const Profile(),
@@ -41,12 +44,12 @@ class _ProfileState extends State<Profile> {
     try {
       print('Loading user data...');
       print('Current user ID: ${_auth.currentUser?.uid}');
-      
+
       final doc = await _firestore
           .collection('users')
           .doc(_auth.currentUser?.uid)
           .get();
-      
+
       print('Document exists: ${doc.exists}');
       if (doc.exists) {
         print('Document data: ${doc.data()}');
@@ -99,7 +102,8 @@ class _ProfileState extends State<Profile> {
                     onPressed: () {
                       Navigator.pushReplacement(
                         context,
-                        MaterialPageRoute(builder: (context) => const HomePage()),
+                        MaterialPageRoute(
+                            builder: (context) => const HomePage()),
                       );
                     },
                   ),
@@ -204,7 +208,7 @@ class _ProfileState extends State<Profile> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(left: 10, right: 130),
+                          padding: const EdgeInsets.only(left: 10, right: 140),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -217,7 +221,7 @@ class _ProfileState extends State<Profile> {
                                 ),
                               ),
                               Text(
-                                userData?['nickname'] ?? 'Loading...',
+                                userData?['nickname'] ?? '',
                                 style: const TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
@@ -229,7 +233,7 @@ class _ProfileState extends State<Profile> {
                         ),
                         const SizedBox(height: 30),
                         Padding(
-                          padding: const EdgeInsets.only(left: 10, right: 180),
+                          padding: const EdgeInsets.only(left: 10, right: 190),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -242,8 +246,16 @@ class _ProfileState extends State<Profile> {
                                 ),
                               ),
                               Text(
-                                (userData?['gender'] ?? 'Loading...').toString().substring(0, 1).toUpperCase() +
-                                (userData?['gender'] ?? 'Loading...').toString().substring(1).toLowerCase(),
+                                userData?['gender'] != null
+                                    ? userData!['gender']
+                                            .toString()
+                                            .substring(0, 1)
+                                            .toUpperCase() +
+                                        userData!['gender']
+                                            .toString()
+                                            .substring(1)
+                                            .toLowerCase()
+                                    : '',
                                 style: const TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
@@ -255,7 +267,7 @@ class _ProfileState extends State<Profile> {
                         ),
                         const SizedBox(height: 30),
                         Padding(
-                          padding: const EdgeInsets.only(left: 10, right: 160),
+                          padding: const EdgeInsets.only(left: 10, right: 170),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -268,7 +280,7 @@ class _ProfileState extends State<Profile> {
                                 ),
                               ),
                               Text(
-                                userData?['birthYear'] ?? 'Loading...',
+                                userData?['birthYear'] ?? '',
                                 style: const TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
@@ -296,16 +308,14 @@ class _ProfileState extends State<Profile> {
           setState(() {
             _selectedIndex = index;
           });
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => _pages[index]),
-          );
+          _navigateToPage(index);
         },
         items: [
           _buildBottomNavItem(Icons.house_outlined, 'Home', 0),
-          _buildBottomNavItem(Icons.lightbulb_outline_rounded, 'Test', 1),
-          _buildBottomNavItem(Icons.directions_walk_outlined, 'Exercise', 2),
-          _buildBottomNavItem(Icons.person_outline_outlined, 'Profile', 3),
+          _buildBottomNavItem(Icons.book_outlined, 'Diary', 1),
+          _buildBottomNavItem(Icons.lightbulb_outline_rounded, 'Test', 2),
+          _buildBottomNavItem(Icons.directions_walk_outlined, 'Exercise', 3),
+          _buildBottomNavItem(Icons.person_outline_outlined, 'Profile', 4),
         ],
         selectedItemColor: Colors.brown,
         unselectedItemColor: Colors.brown.withOpacity(0.6),
@@ -336,5 +346,26 @@ class _ProfileState extends State<Profile> {
         color: isSelected ? Colors.white : Colors.brown.withOpacity(0.6),
       ),
     );
+  }
+
+  void _navigateToPage(int index) async {
+    if (index == 1) {
+      // Diary tab
+      final diaryStorage = DiaryStorage();
+      final entries = await diaryStorage.getDiaryEntries();
+      if (mounted) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => MoodHistory(diaryEntries: entries),
+          ),
+        );
+      }
+    } else {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => _pages[index]),
+      );
+    }
   }
 }
