@@ -5,6 +5,7 @@ import 'package:calmode/self_test/self_test.dart';
 import 'package:flutter/material.dart';
 import 'package:calmode/other/link.dart';
 import 'package:calmode/services/diary_storage.dart';
+import 'package:audioplayers/audioplayers.dart';
 
 class Exercise extends StatefulWidget {
   const Exercise({super.key});
@@ -13,22 +14,78 @@ class Exercise extends StatefulWidget {
   _ExerciseState createState() => _ExerciseState();
 }
 
-class _ExerciseState extends State<Exercise> {
+class _ExerciseState extends State<Exercise>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _animationController;
+  final AudioPlayer audioPlayer = AudioPlayer();
+  int? playingIndex;
   final List<Map<String, String>> audioList = [
-    {'title': 'Running Day', 'image': Audio.runningDay},
-    {'title': 'Forest Waterfall', 'image': Audio.forestWaterfall},
-    {'title': 'Ocean Sea', 'image': Audio.oceanSea},
+    {
+      'title': 'Raining Day',
+      'image': Audio.rainingDay,
+      'audio': Mp3.rainingSound
+    },
+    {
+      'title': 'Forest Waterfall',
+      'image': Audio.forestWaterfall,
+      'audio': Mp3.waterfallSound
+    },
+    {'title': 'Ocean Sea', 'image': Audio.oceanSea, 'audio': Mp3.oceanSeaSound},
+    // add other audio
+    //{'title': 'Ocean Sea', 'image': Audio.oceanSea, 'audio': Mp3.oceanSeaSound},
   ];
   final String imageUrl = Audio.earphone;
   int _selectedIndex = 3;
 
   final List<Widget> _pages = [
     const HomePage(),
-    MoodHistory(diaryEntries: const []),
+    const MoodHistory(diaryEntries: []),
     const SelfTest(),
     const Exercise(),
     const Profile(),
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      duration: const Duration(seconds: 10), // One rotation every 10 seconds
+      vsync: this,
+    );
+    // Make it rotate continuously
+    _animationController.addListener(() {
+      if (_animationController.status == AnimationStatus.completed) {
+        _animationController.reset();
+        _animationController.forward();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    audioPlayer.dispose();
+    super.dispose();
+  }
+
+  Future<void> toggleAudio(int index) async {
+    if (playingIndex == index) {
+      await audioPlayer.pause();
+      _animationController.stop();
+      setState(() {
+        playingIndex = null;
+      });
+    } else {
+      if (playingIndex != null) {
+        await audioPlayer.stop();
+      }
+      await audioPlayer.play(UrlSource(audioList[index]['audio']!));
+      _animationController.forward();
+      setState(() {
+        playingIndex = index;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -145,19 +202,31 @@ class _ExerciseState extends State<Exercise> {
                         child: Row(
                           children: [
                             Stack(
-                              alignment: Alignment
-                                  .center, // Center align for the Stack
+                              alignment: Alignment.center,
                               children: [
-                                CircleAvatar(
-                                  radius:
-                                      40, // Adjust the radius for the avatar size
-                                  backgroundImage:
-                                      NetworkImage(audioList[index]['image']!),
-                                ),
-                                const Icon(
-                                  Icons.play_circle_fill,
-                                  color: Colors.white,
-                                  size: 45, // Adjust the size of the play icon
+                                playingIndex == index
+                                    ? RotationTransition(
+                                        turns: _animationController,
+                                        child: CircleAvatar(
+                                          radius: 40,
+                                          backgroundImage: NetworkImage(
+                                              audioList[index]['image']!),
+                                        ),
+                                      )
+                                    : CircleAvatar(
+                                        radius: 40,
+                                        backgroundImage: NetworkImage(
+                                            audioList[index]['image']!),
+                                      ),
+                                GestureDetector(
+                                  onTap: () => toggleAudio(index),
+                                  child: Icon(
+                                    playingIndex == index
+                                        ? Icons.pause_circle_filled
+                                        : Icons.play_circle_fill,
+                                    color: Colors.white,
+                                    size: 45,
+                                  ),
                                 ),
                               ],
                             ),

@@ -44,10 +44,19 @@ class Test {
 class Audio {
   static const String earphone =
       'https://firebasestorage.googleapis.com/v0/b/calmode.appspot.com/o/Exercise%2Fearphone.png?alt=media&token=a5857568-f667-4834-be9e-ec6a609415d1';
-  static const String runningDay =
+  static const String rainingDay =
       'https://firebasestorage.googleapis.com/v0/b/calmode.appspot.com/o/Exercise%2Frunning%20day.png?alt=media&token=595d823a-a3e9-49e9-91d1-a02f05e2bf84';
   static const String forestWaterfall =
       'https://firebasestorage.googleapis.com/v0/b/calmode.appspot.com/o/Exercise%2Fforest%20waterfall.png?alt=media&token=8e7f34ee-eaab-4607-b5b1-750edf86739a';
   static const String oceanSea =
       'https://firebasestorage.googleapis.com/v0/b/calmode.appspot.com/o/Exercise%2Focean%20sea.png?alt=media&token=16821db8-cbd7-48dc-8e11-63fe52a0500b';
+}
+
+class Mp3 {
+  static const String rainingSound =
+      'https://firebasestorage.googleapis.com/v0/b/calmode.appspot.com/o/Exercise%2Fraining%20sound.mp3?alt=media&token=12599d8c-b1f6-4568-98d9-f218e8d48157';
+  static const String waterfallSound =
+      'https://firebasestorage.googleapis.com/v0/b/calmode.appspot.com/o/Exercise%2FRainfall%20sound.mp3?alt=media&token=658b339b-d9a6-4a02-ba0d-49ed29cbdab6';
+  static const String oceanSeaSound =
+      'https://firebasestorage.googleapis.com/v0/b/calmode.appspot.com/o/Exercise%2FSea%20%20sound.mp3?alt=media&token=33d84f63-2f3b-42b0-98fe-4e9c3467a5c5';
 }
