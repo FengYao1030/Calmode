@@ -84,104 +84,119 @@ class _MoodHistoryState extends State<MoodHistory> {
           Padding(
             padding: const EdgeInsets.only(
                 top: 125), // Adjust top padding to move content down
-            child: ListView.builder(
-              itemCount: widget.diaryEntries.length,
-              itemBuilder: (context, index) {
-                final entry = widget.diaryEntries[index];
-                return Padding(
-                  padding:
-                      const EdgeInsets.only(left: 20, right: 20, bottom: 15),
-                  child: GestureDetector(
-                    onTap: () {
-                      print('Tapped entry content: ${entry.content}');
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => DailyHistory(entry: entry),
-                        ),
-                      );
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(22),
+            child: widget.diaryEntries.isEmpty
+                ? Center(
+                    child: Text(
+                      'No any record',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.brown.withOpacity(0.6),
                       ),
-                      child: ListTile(
-                        contentPadding: const EdgeInsets.symmetric(
-                          vertical: 8.0,
-                          horizontal: 16.0,
-                        ),
-                        leading: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                              width: 50,
-                              height: 50,
-                              decoration: BoxDecoration(
-                                color: const Color.fromRGBO(247, 244, 242, 1),
-                                borderRadius: BorderRadius.circular(12),
+                    ),
+                  )
+                : ListView.builder(
+                    itemCount: widget.diaryEntries.length,
+                    itemBuilder: (context, index) {
+                      final entry = widget.diaryEntries[index];
+                      return Padding(
+                        padding: const EdgeInsets.only(
+                            left: 20, right: 20, bottom: 15),
+                        child: GestureDetector(
+                          onTap: () {
+                            print('Tapped entry content: ${entry.content}');
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    DailyHistory(entry: entry),
                               ),
-                              alignment: Alignment.center,
-                              child: Column(
+                            );
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(22),
+                            ),
+                            child: ListTile(
+                              contentPadding: const EdgeInsets.symmetric(
+                                vertical: 8.0,
+                                horizontal: 16.0,
+                              ),
+                              leading: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Text(
-                                    entry.date != null
-                                        ? DateFormat('MMM')
-                                            .format(entry.date)
-                                            .toUpperCase()
-                                        : '',
-                                    style: const TextStyle(
-                                      color: Colors.brown,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 12,
+                                  Container(
+                                    width: 50,
+                                    height: 50,
+                                    decoration: BoxDecoration(
+                                      color: const Color.fromRGBO(
+                                          247, 244, 242, 1),
+                                      borderRadius: BorderRadius.circular(12),
                                     ),
-                                  ),
-                                  Text(
-                                    entry.date != null
-                                        ? DateFormat('dd').format(entry.date)
-                                        : '',
-                                    style: const TextStyle(
-                                      color: Colors.brown,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18,
+                                    alignment: Alignment.center,
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          entry.date != null
+                                              ? DateFormat('MMM')
+                                                  .format(entry.date)
+                                                  .toUpperCase()
+                                              : '',
+                                          style: const TextStyle(
+                                            color: Colors.brown,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 12,
+                                          ),
+                                        ),
+                                        Text(
+                                          entry.date != null
+                                              ? DateFormat('dd')
+                                                  .format(entry.date)
+                                              : '',
+                                          style: const TextStyle(
+                                            color: Colors.brown,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18,
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ],
                               ),
+                              title: Text(
+                                entry.mood ?? 'No Mood',
+                                style: const TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              trailing: Image.network(
+                                entry.moodImage ?? '',
+                                width: 40,
+                                height: 40,
+                                errorBuilder: (context, error, stackTrace) {
+                                  return const Icon(Icons.mood, size: 40);
+                                },
+                              ),
+                              subtitle: Text(
+                                entry.content ?? 'No content',
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.grey,
+                                ),
+                              ),
                             ),
-                          ],
-                        ),
-                        title: Text(
-                          entry.mood ?? 'No Mood',
-                          style: const TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
                           ),
                         ),
-                        trailing: Image.network(
-                          entry.moodImage ?? '',
-                          width: 40,
-                          height: 40,
-                          errorBuilder: (context, error, stackTrace) {
-                            return const Icon(Icons.mood, size: 40);
-                          },
-                        ),
-                        subtitle: Text(
-                          entry.content ?? 'No content',
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
-                            fontSize: 14,
-                            color: Colors.grey,
-                          ),
-                        ),
-                      ),
-                    ),
+                      );
+                    },
                   ),
-                );
-              },
-            ),
           ),
         ],
       ),

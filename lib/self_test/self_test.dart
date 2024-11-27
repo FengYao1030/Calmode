@@ -2,6 +2,7 @@ import 'package:calmode/exercise/exercise.dart';
 import 'package:calmode/other/homepage.dart';
 import 'package:calmode/other/profile.dart';
 import 'package:calmode/record_diary/mood_history.dart';
+import 'package:calmode/self_test/dass_test.dart';
 import 'package:calmode/self_test/phq9_test.dart';
 import 'package:flutter/material.dart';
 import 'package:calmode/services/diary_storage.dart';
@@ -88,7 +89,7 @@ class _SelfTestState extends State<SelfTest> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const PHQ9Test()),
+                      MaterialPageRoute(builder: (context) => const DASSTest()),
                     );
                   },
                 ),
@@ -199,7 +200,8 @@ class _SelfTestState extends State<SelfTest> {
   }
 
   void _navigateToPage(int index) async {
-    if (index == 1) {  // Diary tab
+    if (index == 1) {
+      // Diary tab
       final diaryStorage = DiaryStorage();
       final entries = await diaryStorage.getDiaryEntries();
       if (mounted) {

@@ -1,4 +1,4 @@
-import 'package:calmode/self_test/result_utils.dart';
+import 'package:calmode/self_test/phq9_result_utils.dart';
 import 'package:calmode/self_test/self_test.dart';
 import 'package:flutter/material.dart';
 

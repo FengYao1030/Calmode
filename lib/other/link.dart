@@ -39,6 +39,8 @@ class Test {
       'https://firebasestorage.googleapis.com/v0/b/calmode.appspot.com/o/Test%2Fmoderately%20severe.png?alt=media&token=546851dc-392c-44a9-a7e3-dbc5c3900f2b';
   static const String severe =
       'https://firebasestorage.googleapis.com/v0/b/calmode.appspot.com/o/Test%2Fsevere.png?alt=media&token=e07d2603-f96b-4f88-a9ca-64f5f924dd2b';
+  static const String dassResult =
+      "https://firebasestorage.googleapis.com/v0/b/calmode.appspot.com/o/Test%2Fdass%20test%20result.png?alt=media&token=98f49dbe-664a-4117-a4f1-9d67ee6c2c0e";
 }
 
 class Audio {

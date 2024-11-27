@@ -1,7 +1,7 @@
 import 'package:calmode/other/link.dart';
 import 'package:calmode/self_test/confirmation.dart';
 import 'package:calmode/self_test/phq9_result.dart';
-import 'package:calmode/self_test/result_utils.dart';
+import 'package:calmode/self_test/phq9_result_utils.dart';
 import 'package:calmode/self_test/self_test.dart';
 import 'package:flutter/material.dart';
 
@@ -49,15 +49,16 @@ class _PHQ9TestState extends State<PHQ9Test> {
         'Are you sure you want to exit the test? Your progress will be lost.';
 
     showConfirmationDialog(context, imageUrl, message).then((confirmed) {
-    if (confirmed == true) {
-      // If the user confirmed exit, navigate to the specific page (SelfTest)
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => const SelfTest()),
-      );
-    }
-    // If confirmed is false (cancel), do nothing (just close the dialog)
-  });
-}
+      if (confirmed == true) {
+        // If the user confirmed exit, navigate to the specific page (SelfTest)
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => const SelfTest()),
+        );
+      }
+      // If confirmed is false (cancel), do nothing (just close the dialog)
+    });
+  }
+
   List<int> selectedOptions = List.filled(9, -1);
   int currentIndex = 0;
 
@@ -121,7 +122,10 @@ class _PHQ9TestState extends State<PHQ9Test> {
         ),
         centerTitle: false,
       ),
-      body: _buildQuestionCard(currentIndex),
+      body: SingleChildScrollView(
+        // Add this wrapper to make the content scrollable
+        child: _buildQuestionCard(currentIndex),
+      ),
     );
   }
 
