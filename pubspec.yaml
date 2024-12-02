@@ -18,6 +18,9 @@ dependencies:
   cloud_firestore: ^5.4.4
   intl: ^0.19.0 # set the real time
   audioplayers: ^6.1.0 # play audio
+  webview_flutter: ^4.10.0 # youtube
+  youtube_player_flutter: ^9.1.1 # play youtube shorts
+  http: ^1.2.2 # access http
 
 dev_dependencies:
   flutter_test:
