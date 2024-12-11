@@ -121,66 +121,6 @@ class AuthService {
     }
   }
 
-/*
-  // sign in condition checking
-  Future<void> signInWithEmailPassword(
-      BuildContext context, String email, String password) async {
-    if (email.isEmpty || password.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Email and password cannot be empty.')),
-      );
-      return; // Return if input is empty
-    }
-
-    if (!_isValidEmail(email)) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Invalid email format.')),
-      );
-      return; // Return if email format is invalid
-    }
-
-    try {
-      // Attempt to sign in with email and password
-      UserCredential userCredential = await _auth.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-
-      // Display successful login message
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-            content: Text('Login Successful: ${userCredential.user?.email}')),
-      );
-
-      // Navigate to HomePage
-      await Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(builder: (context) => const HomePage()),
-        (Route<dynamic> route) => false, // Clear navigation stack
-      );
-    } on FirebaseAuthException catch (e) {
-      // Handle specific Firebase errors
-      if (e.code == 'user-not-found') {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('No user found for that email.')),
-        );
-      } else if (e.code == 'wrong-password') {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Incorrect password.')),
-        );
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Login failed: ${e.message}')),
-        );
-      }
-    } catch (e) {
-      // Handle any other exceptions
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('An error occurred: $e')),
-      );
-    }
-  }
-*/
   void signOutUser() {
     _auth.signOut();
   }

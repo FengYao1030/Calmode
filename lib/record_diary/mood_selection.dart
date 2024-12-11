@@ -5,20 +5,6 @@ import 'package:calmode/services/diary_storage.dart';
 import 'package:flutter/material.dart';
 import 'diary_entry_model.dart';
 
-/*const String imageUrl = mood.depressed;
-const String imageUrl2 = mood.sad;
-const String imageUrl3 = mood.neutral;
-const String imageUrl4 = mood.happy;
-const String imageUrl5 = mood.overjoyed;
-
-final List<Mood> moods = [
-  Mood("Depressed", imageUrl, const Color.fromRGBO(166, 148, 245, 1)),
-  Mood("Sad", imageUrl2, const Color.fromRGBO(237, 126, 28, 1)),
-  Mood("Neutral", imageUrl3, const Color.fromRGBO(146, 98, 71, 1)),
-  Mood("Happy", imageUrl4, const Color.fromRGBO(255, 206, 92, 1)),
-  Mood("Overjoyed", imageUrl5, const Color.fromRGBO(155, 177, 103, 1)),
-];*/
-
 class MoodSelection extends StatefulWidget {
   final String diaryContent;
 
@@ -43,7 +29,7 @@ class _MoodSelectionState extends State<MoodSelection> {
 
   void _saveDiaryEntry() async {
     final Mood selectedMood = moods[_selectedMoodIndex];
-    
+
     final entry = DiaryEntry(
       date: DateTime.now(),
       content: widget.diaryContent,
@@ -53,9 +39,9 @@ class _MoodSelectionState extends State<MoodSelection> {
 
     try {
       await _diaryStorage.saveDiaryEntry(entry);
-      
+
       if (!mounted) return;
-      
+
       // Get updated entries and navigate
       final entries = await _diaryStorage.getDiaryEntries();
       Navigator.pushReplacement(
@@ -159,87 +145,3 @@ class _MoodSelectionState extends State<MoodSelection> {
     );
   }
 }
-
-/*class MoodSelector extends StatelessWidget {
-  final int selectedMoodIndex;
-  final ValueChanged<int> onMoodSelected;
-
-  const MoodSelector({
-    super.key,
-    required this.selectedMoodIndex,
-    required this.onMoodSelected,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 30),
-      padding: const EdgeInsets.symmetric(vertical: 10),
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: List.generate(_moods.length, (index) {
-              return GestureDetector(
-                onTap: () => onMoodSelected(index),
-                child: Row(
-                  children: [
-                    // Curved connector between dots
-                    if (index != 0)
-                      Container(
-                        width: 30,
-                        height: 3,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [
-                              Colors.white.withOpacity(0.5),
-                              Colors.white.withOpacity(0.2),
-                            ],
-                          ),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                      ),
-                    // Mood dot
-                    Container(
-                      width: index == selectedMoodIndex ? 40 : 28,
-                      height: index == selectedMoodIndex ? 40 : 28,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: index == selectedMoodIndex
-                            ? Colors.white
-                            : Colors.white.withOpacity(0.3),
-                        border: index == selectedMoodIndex
-                            ? Border.all(color: Colors.white, width: 3)
-                            : null,
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Colors.black26,
-                            offset: Offset(3, 3),
-                            blurRadius: 7,
-                          ),
-                        ],
-                      ),
-                      child: Center(
-                        child: Container(
-                          width: 16,
-                          height: 16,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: index == selectedMoodIndex
-                                ? _moods[selectedMoodIndex].backgroundColor
-                                : Colors.transparent,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            }),
-          ),
-        ],
-      ),
-    );
-  }
-}*/

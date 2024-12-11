@@ -1,16 +1,6 @@
 import 'package:calmode/record_diary/mood_model.dart';
 import 'package:flutter/material.dart';
 
-/*class Mood {
-  final String label;
-  final String imageUrl;
-  final Color backgroundColor;
-
-  Mood(this.label, this.imageUrl, this.backgroundColor);
-
-  Image get image => Image.network(imageUrl);
-}*/
-
 class MoodSelector extends StatelessWidget {
   final int selectedMoodIndex;
   final ValueChanged<int> onMoodSelected;

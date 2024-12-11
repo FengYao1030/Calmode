@@ -147,9 +147,6 @@ class _SignInState extends State<SignIn> {
                     ],
                   ),
                 ),
-                /*const SizedBox(
-                  height: 80,
-                ),*/
               ],
             ),
           ),
@@ -316,60 +313,6 @@ class _SignInState extends State<SignIn> {
                       ),
                     ),
                   ),
-
-                  /*GestureDetector(
-                    onTap: _login,
-                    child: Container(
-                      height: 60,
-                      width: 350,
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.rectangle,
-                        borderRadius: BorderRadius.all(Radius.circular(1000)),
-                        color: Color.fromRGBO(79, 52, 34, 1),
-                      ),
-                      alignment: Alignment.center,
-                      child: const Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Sign In',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                fontFamily: 'urbanist'),
-                          ),
-                          SizedBox(width: 8),
-                          Icon(
-                            Icons.arrow_forward_rounded,
-                            color: Colors.white,
-                          )
-                        ],
-                      ),
-                    ),
-                  ),*/
-
-                  /*const SizedBox(height: 20),
-                RichText(
-                  text: TextSpan(
-                    text: 'Don\'t have an account? ',
-                    style: const TextStyle(color: Color.fromRGBO(79, 52, 34, 1)),
-                    children: [
-                      TextSpan(
-                        text: 'Sign Up',
-                        style: const TextStyle(
-                          color: Color.fromRGBO(237, 126, 28, 1),
-                          decoration: TextDecoration.underline,
-                        ),
-                        recognizer: TapGestureRecognizer()
-                          /*..onTap = () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => const SignUp()));
-                          },*/
-                      ),
-                    ],
-                  ),
-                ),*/
                 ],
               ),
             ),

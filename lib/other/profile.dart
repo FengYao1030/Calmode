@@ -338,8 +338,3 @@ class _ProfileState extends State<Profile> {
     }
   }
 }
-
-
-/*
-the nickname too long can be 2 lines or set the nickname length on fillup information
-*/

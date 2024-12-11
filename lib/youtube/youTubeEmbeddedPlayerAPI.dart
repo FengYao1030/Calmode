@@ -48,62 +48,6 @@ class _YouTubeEmbeddedPlayerAPIState extends State<YouTubeEmbeddedPlayerAPI> {
     }
   }
 
-/*
-Morning teacher. I have already try apply the Youtube Embedded Player API in my code. based on my research, this api is require either the playlistID or videoID to play the video smoothly. 
-Now my code have using the API key to fetch video IDs from the specified playlist; YouTube Embedded Player API(through youtube_player_flutter) to play the video in playlist.
-so is my way to apply the API is correct? and is there possible ways without using the ID can play the dynamic video by free?
-*/
-
-/*
-  // Function to play a random video from the playlist
-  void playRandomVideo() {
-    if (videoIds.isNotEmpty) {
-      final random = Random();
-      final availableVideos =
-          videoIds.where((id) => id != currentVideoId).toList();
-
-      if (availableVideos.isNotEmpty) {
-        final randomVideoId =
-            availableVideos[random.nextInt(availableVideos.length)];
-
-        setState(() {
-          currentVideoId = randomVideoId; // Update the current video ID
-          print('Playing new video: $currentVideoId'); // Debug output
-        });
-
-        // Dispose of the old controller and create a new one
-        _youtubePlayerController?.dispose();
-
-        // Create a new controller with error handling
-        _youtubePlayerController = YoutubePlayerController(
-          initialVideoId: randomVideoId,
-          flags: const YoutubePlayerFlags(
-            autoPlay: true,
-            mute: false,
-          ),
-        );
-
-        // Add listener for player state changes
-        _youtubePlayerController!.addListener(() {
-          if (_youtubePlayerController!.value.hasError) {
-            print(
-                'Error playing video: ${_youtubePlayerController!.value.errorCode}');
-          }
-        });
-      } else {
-        // Reset currentVideoId to allow replaying videos
-        setState(() {
-          currentVideoId = null; // Reset to allow replaying
-        });
-        print(
-            'All videos have been played. You can start over.'); // Inform the user
-      }
-    } else {
-      print('No videos available to play'); // Debug output
-    }
-  }
-*/
-
   // Function to play a specific video
   void playVideo(String videoId) {
     setState(() {

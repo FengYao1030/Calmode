@@ -5,7 +5,6 @@ import 'package:calmode/other/homepage.dart';
 import 'package:calmode/self_test/dass_result.dart';
 import 'package:calmode/self_test/dass_test.dart';
 import 'package:calmode/services/firebase_options.dart';
-import 'package:calmode/youtube/youTubeEmbeddedPlayerAPI.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -40,18 +39,16 @@ class MyApp extends StatelessWidget {
 ----------------------------------------
 Advanced
 - my mood allow user to delete record
-- to view specific date diary
-- to select specific date add a diary
+- to view specific date diary /
+- to select specific date add a diary X
 
 - DASS Test /
 
 - add more audio
-- apply suitable API
+- apply suitable API /
 
-- community (optional)
+- community (optional) X
 
-- profile add profile picture (optional)
-
-AIzaSyBXghiWxfmFJfYBTvPCzqjohRySOJNmtt0
+- profile add profile picture (optional) X
 */
 
