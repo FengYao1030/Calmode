@@ -1,12 +1,11 @@
-import 'package:calmode/exercise/call_function.dart';
-import 'package:calmode/exercise/mix_function.dart';
+import 'package:calmode/auth/sign_in.dart';
+import 'package:calmode/auth/sign_up.dart';
+import 'package:calmode/exercise/activity.dart';
 import 'package:calmode/other/homepage.dart';
 import 'package:calmode/self_test/dass_result.dart';
 import 'package:calmode/self_test/dass_test.dart';
 import 'package:calmode/services/firebase_options.dart';
-import 'package:calmode/youtube/random_video.dart';
-import 'package:calmode/youtube/web_view.dart';
-import 'package:calmode/youtube/youtube_video.dart';
+import 'package:calmode/youtube/youTubeEmbeddedPlayerAPI.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -29,7 +28,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MixExercisePage(),
+      home: const SignIn(),
     );
   }
 }
@@ -52,5 +51,7 @@ Advanced
 - community (optional)
 
 - profile add profile picture (optional)
+
+AIzaSyBXghiWxfmFJfYBTvPCzqjohRySOJNmtt0
 */
 

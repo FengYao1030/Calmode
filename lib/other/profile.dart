@@ -1,4 +1,4 @@
-import 'package:calmode/exercise/exercise.dart';
+import 'package:calmode/exercise/activity.dart';
 import 'package:calmode/other/homepage.dart';
 import 'package:calmode/other/link.dart';
 import 'package:calmode/auth/sign_in.dart';
@@ -24,9 +24,9 @@ class _ProfileState extends State<Profile> {
 
   final List<Widget> _pages = [
     const HomePage(),
-    MoodHistory(diaryEntries: const []),
+    const MoodHistory(diaryEntries: []),
     const SelfTest(),
-    const Exercise(),
+    const Activity(),
     const Profile(),
   ];
 
@@ -139,55 +139,7 @@ class _ProfileState extends State<Profile> {
                   ],
                 ),
 
-                // Profile Picture with Overlap
-                /*Positioned(
-                  top: 170,
-                  left: MediaQuery.of(context).size.width / 2 - 50,
-                  child: CircleAvatar(
-                    radius: 50,
-                    backgroundImage: NetworkImage(imageUrl3),
-                  ),
-                ),*/
-
-                // Three-Dot Menu for Logout
-                /*Positioned(
-                  top: 240,
-                  right: 10,
-                  child: PopupMenuButton(
-                    icon: const Icon(Icons.more_vert, color: Colors.black),
-                    onSelected: (value) {
-                      if (value == 'logout') {
-                        // Navigate to the sign-in page
-                        Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(builder: (context) => const SignIn()),
-                        );
-                      }
-                    },
-                    itemBuilder: (BuildContext context) => [
-                      const PopupMenuItem(
-                        value: 'logout',
-                        child: ListTile(
-                          leading: Icon(Icons.logout, color: Colors.brown),
-                          title: Text('Logout'),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),*/
-
-                const SizedBox(height: 200),
-
-                // Profile Name
-                /*const Text(
-                  'Shambhavi Mishra',
-                  style: TextStyle(
-                    fontFamily: 'Urbanist',
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),*/
-
-                const SizedBox(height: 20),
+                const SizedBox(height: 220),
 
                 // Profile Details Card
                 Padding(
@@ -208,9 +160,8 @@ class _ProfileState extends State<Profile> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(left: 10, right: 140),
+                          padding: const EdgeInsets.only(left: 10, right: 10),
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               const Text(
                                 "Nickname: ",
@@ -220,46 +171,18 @@ class _ProfileState extends State<Profile> {
                                   color: Colors.grey,
                                 ),
                               ),
-                              Text(
-                                userData?['nickname'] ?? '',
-                                style: const TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  color: Color.fromRGBO(79, 52, 34, 1),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(height: 30),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 10, right: 190),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const Text(
-                                "Gender: ",
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.grey,
-                                ),
-                              ),
-                              Text(
-                                userData?['gender'] != null
-                                    ? userData!['gender']
-                                            .toString()
-                                            .substring(0, 1)
-                                            .toUpperCase() +
-                                        userData!['gender']
-                                            .toString()
-                                            .substring(1)
-                                            .toLowerCase()
-                                    : '',
-                                style: const TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  color: Color.fromRGBO(79, 52, 34, 1),
+                              Flexible(
+                                child: Text(
+                                  (userData?['nickname'] ?? '')
+                                      .trim(), // Display nickname
+                                  style: const TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: Color.fromRGBO(
+                                        79, 52, 34, 1), // Brown color
+                                  ),
+                                  overflow: TextOverflow
+                                      .ellipsis, // Will show ellipsis when text overflows
                                 ),
                               ),
                             ],
@@ -271,20 +194,66 @@ class _ProfileState extends State<Profile> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const Text(
-                                "Birth Year: ",
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.grey,
+                              RichText(
+                                text: TextSpan(
+                                  children: [
+                                    const TextSpan(
+                                      text: "Gender: ",
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                    TextSpan(
+                                      text: userData?['gender'] != null
+                                          ? userData!['gender']
+                                                  .toString()
+                                                  .substring(0, 1)
+                                                  .toUpperCase() +
+                                              userData!['gender']
+                                                  .toString()
+                                                  .substring(1)
+                                                  .toLowerCase()
+                                          : '',
+                                      style: const TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                        color: Color.fromRGBO(79, 52, 34, 1),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                              Text(
-                                userData?['birthYear'] ?? '',
-                                style: const TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  color: Color.fromRGBO(79, 52, 34, 1),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 30),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 10, right: 170),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              RichText(
+                                text: TextSpan(
+                                  children: [
+                                    const TextSpan(
+                                      text: "Birth Year: ",
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                    TextSpan(
+                                      text: userData?['birthYear'] ?? '',
+                                      style: const TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                        color: Color.fromRGBO(79, 52, 34, 1),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ],
@@ -369,3 +338,8 @@ class _ProfileState extends State<Profile> {
     }
   }
 }
+
+
+/*
+the nickname too long can be 2 lines or set the nickname length on fillup information
+*/

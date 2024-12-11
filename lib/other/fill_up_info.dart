@@ -43,7 +43,14 @@ class _FillUpInfoState extends State<FillUpInfo> {
         _gender == null ||
         _birthYear == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please fill all fields')),
+        _customSnackBar('Please fill all fields'),
+      );
+      return;
+    }
+
+    if (_nicknameController.text.length > 20) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        _customSnackBar('Nickname must not exceed 20 characters'),
       );
       return;
     }

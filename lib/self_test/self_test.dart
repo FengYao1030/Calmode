@@ -1,4 +1,4 @@
-import 'package:calmode/exercise/exercise.dart';
+import 'package:calmode/exercise/activity.dart';
 import 'package:calmode/other/homepage.dart';
 import 'package:calmode/other/profile.dart';
 import 'package:calmode/record_diary/mood_history.dart';
@@ -21,7 +21,7 @@ class _SelfTestState extends State<SelfTest> {
     const HomePage(),
     MoodHistory(diaryEntries: const []),
     const SelfTest(),
-    const Exercise(),
+    const Activity(),
     const Profile(),
   ];
 

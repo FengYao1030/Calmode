@@ -1,4 +1,4 @@
-import 'package:calmode/exercise/exercise.dart';
+import 'package:calmode/exercise/activity.dart';
 import 'package:calmode/other/link.dart';
 import 'package:calmode/other/profile.dart';
 import 'package:calmode/record_diary/daily_diary.dart';
@@ -52,7 +52,7 @@ class _HomePageState extends State<HomePage> {
     const HomePage(),
     MoodHistory(diaryEntries: const []),
     const SelfTest(),
-    const Exercise(),
+    const Activity(),
     const Profile(),
   ];
 
